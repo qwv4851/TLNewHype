@@ -1,0 +1,15 @@
+{
+  "name": "New Hype",
+  "version": "1.0",
+  "manifest_version": 2,
+  "description": "Gets the latest hype from Team Liquid.",
+  "content_scripts": [
+    {
+      "matches": ["http://www.teamliquid.net/*"],
+      "js": ["jquery.js", "newhype.js"]
+    }
+  ],
+  "permissions": [
+	"http://www.teamliquid.net/*"
+  ]
+}
