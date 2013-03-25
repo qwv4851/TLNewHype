@@ -1,54 +1,39 @@
-var idRankMap = [];
-
-// Entry point. Loads each of the subforms then ranks and colors their links.
+// Entry point. Ranks each of the sidebar links according to their topic ids.
 
 $(document).ready(function() {
-  var pageIds = [1, 37, 56, 29, 19, 36, 34, 44, 45, 18];
-  var onPageLoad = function(data) {
-    rankThreads(data);
-    colorLinks();
-  };
-  $.each(pageIds, function(index, id) {
-    $.get('http://www.teamliquid.net/forum/index.php?show_part=' + id + '&sort=post', onPageLoad);
+  var links = $('.sidemenu').find('a[href]');
+  var maxID = 0;
+  var topicLinks = [];
+  links.each(function() {
+    var link = $(this);
+    var matches = link.attr("href").match(/topic_id=(\d+)/);
+    if (matches) {
+      var id = parseInt(matches[1], 10);
+      maxID = Math.max(maxID, id);
+      topicLinks.push({
+        link: link,
+        id: id
+      });
+    }
+  });
+  $.each(topicLinks, function() {
+    this.rank = maxID - this.id;
+    colorLink(this);
   });
 });
 
-function colorLinks() {
-  $('.sidemenu').find('a').each(function() {
-    colorLink($(this));
-  });
-}
+// Colors the given link according to its forum id ranking.
 
-function colorLink(link) {
-  var url = link.attr("href");
-  if (url !== undefined) {
-    var matches = url.match(/topic_id=(\d+)/);
-    if (matches) {
-      var id = parseInt(matches[1], 10);
-      var rank = idRankMap[id];
-      if (rank !== undefined) {
-        var color;
-        if (rank < 2) {
-          color = 'f00';
-        } else if (rank < 5) {
-          color = 'a00';
-        } else if (rank < 10) {
-          color = '600';
-        } else {
-          color = '200';
-        }
-        link.attr('style', 'color:#' + color);
-      }
-    }
+function colorLink(topicLink) {
+  var color;
+  if (topicLink.rank < 50) {
+    color = '#f00';
+  } else if (topicLink.rank < 100) {
+    color = '#a00';
+  } else if (topicLink.rank < 200) {
+    color = '#600';
+  } else {
+    color = '#200';
   }
-}
-
-// Given a subforum, ranks each of the topics by date posted.
-
-function rankThreads(data) {
-  $(data).find('.forumindex').find('a').each(function(index) {
-    var url = $(this).attr("href");
-    var id = parseInt(url.match(/topic_id=(\d+)/)[1], 10);
-    idRankMap[id] = index;
-  });
+  topicLink.link.attr('style', 'color:' + color);
 }
