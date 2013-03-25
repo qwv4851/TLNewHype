@@ -26,13 +26,13 @@ $(document).ready(function() {
 
 function colorLink(topicLink) {
   var color;
-  if (topicLink.rank < 50) {
+  if (topicLink.rank < 25) {
     color = '#f00';
-  } else if (topicLink.rank < 100) {
+  } else if (topicLink.rank < 75) {
     color = '#a00';
-  } else if (topicLink.rank < 200) {
+  } else if (topicLink.rank < 150) {
     color = '#600';
-  } else {
+  } else if (topicLink.rank < 250) {
     color = '#200';
   }
   topicLink.link.attr('style', 'color:' + color);
