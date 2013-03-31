@@ -1,0 +1,3 @@
+Team Liquid New Hype is a Chrome extension for http://teamliquid.net.
+It is designed to color thread links in the sidebar according to creation date.
+The more recent the thread, the more red the link will appear.
