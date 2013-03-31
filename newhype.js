@@ -26,14 +26,14 @@ $(document).ready(function() {
 
 function colorLink(topicLink) {
   var color;
-  if (topicLink.rank < 25) {
+  if (topicLink.rank < 20) {
     color = '#f00';
-  } else if (topicLink.rank < 75) {
+  } else if (topicLink.rank < 40) {
     color = '#a00';
-  } else if (topicLink.rank < 150) {
+  } else if (topicLink.rank < 80) {
     color = '#600';
-  } else if (topicLink.rank < 250) {
-    color = '#200';
+  } else if (topicLink.rank < 160) {
+    color = '#300';
   }
   topicLink.link.attr('style', 'color:' + color);
 }
